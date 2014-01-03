@@ -29,7 +29,10 @@ package cpu_types is
 -- procedure <procedure_name> (<type_declaration> <constant_name>	: in <type_declaration>);
 --
 	
+	-- Declare the constant max size of the program data
+	type t_MemProgramData_32_32 is array (0 to 31) of STD_LOGIC_VECTOR(31 downto 0);
 	
+	-- Declare the constant max size of the register region
 	type t_MemRegister_15_32 is array (0 to 14) of STD_LOGIC_VECTOR(31 downto 0);
 	
 	-- CPU Registers address

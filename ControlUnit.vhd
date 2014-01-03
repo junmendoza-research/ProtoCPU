@@ -60,6 +60,7 @@ architecture Behavioral of ControlUnit is
 	component Fetch is 
 		Port( clock : in STD_LOGIC; 
 				pc : in STD_LOGIC_VECTOR(31 downto 0);
+				programdata : in t_MemProgramData_32_32;
 				instr : out STD_LOGIC_VECTOR(31 downto 0)
 			 );
 	end component Fetch;
@@ -123,12 +124,14 @@ architecture Behavioral of ControlUnit is
 				exec_int : in STD_LOGIC;
 				
 				endprogram : out STD_LOGIC;
+				nextpc : out STD_LOGIC;
 				memregion_register : inout t_MemRegister_15_32
 		    );
 	end component Execute;
 	
 	component GetNextPC is 
 		Port( clock : in STD_LOGIC;
+				nextpc : in STD_LOGIC;	
 			   pc : out STD_LOGIC_VECTOR(31 downto 0)
 			 );
 	end component GetNextPC;
@@ -138,8 +141,8 @@ architecture Behavioral of ControlUnit is
 	-- ControlUnit signals
 	------------------------------------
 	
-	signal pc_instr_address : integer;
 	signal endexecution : STD_LOGIC;
+	signal exec_getpc : STD_LOGIC;
 	
 	-- Registers
 	signal R1  : STD_LOGIC_VECTOR(31 downto 0);
@@ -187,8 +190,7 @@ architecture Behavioral of ControlUnit is
 	-- Initialize program region (Instruction Stream)
 	-- 32 * 16-bit
 	------------------------------------
-	type t_MemArray_32_32 is array (0 to 31) of STD_LOGIC_VECTOR(31 downto 0);
-	signal memregion_program : t_MemArray_32_32 := 
+	signal memregion_program : t_MemProgramData_32_32 := 
 	(
 		X"00000000", X"00000000", X"00000000", X"00000000",
 		X"00000000", X"00000000", X"00000000", X"00000000",
@@ -205,10 +207,8 @@ begin
 	-- Set start PC	
 	--R1 <= X"00000000";
 	
-	-- Fetch
-	pc_instr_address <= to_integer(signed(R1));
-	R2 <= memregion_program(pc_instr_address);
 	
+	FetchInstruction : Fetch port map(clock, R1, memregion_program, R2);
 
 	DecodeInstruction : Decode port map 
 	(
@@ -269,6 +269,7 @@ begin
       execute_int,
 		
 		endexecution, 
+		exec_getpc,
 		
 		memregion_register(R1_addr) => R1, 
 		memregion_register(R2_addr) => R2, 
@@ -287,7 +288,7 @@ begin
 		memregion_register(R15_addr) => R15
 	);
 	
-	GetPC : GetNextPC port map(clock, R1);	
+	GetPC : GetNextPC port map(clock, exec_getpc, R1);	
 	
 end architecture Behavioral;
 

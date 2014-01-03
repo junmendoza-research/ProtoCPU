@@ -61,6 +61,7 @@ entity Execute is
 			exec_int : in STD_LOGIC;
 			
 			endprogram : out STD_LOGIC;
+			nextpc : out STD_LOGIC;
 			memregion_register : inout t_MemRegister_15_32
 		   );
 end Execute;

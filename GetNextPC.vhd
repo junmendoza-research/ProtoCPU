@@ -22,6 +22,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity GetNextPC is
     Port( clock : in STD_LOGIC;
+			 nextpc : in STD_LOGIC;	
 			 pc : out STD_LOGIC_VECTOR(31 downto 0)
 			);
 end GetNextPC;
@@ -30,7 +31,7 @@ architecture Behavioral of GetNextPC is
 
 begin
 
-	GetPC : process(clock) is 
+	GetPC : process(nextpc) is 
 	
 	begin
 		ClockSync : if rising_edge(clock) then

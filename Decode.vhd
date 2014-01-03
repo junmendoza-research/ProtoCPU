@@ -109,7 +109,7 @@ architecture Behavioral of Decode is
 	
 begin
 
-	DecodeInstr : process(clock)
+	DecodeInstr : process(instruction)
 	begin
 		ClockSync : if rising_edge(clock) then
 			
