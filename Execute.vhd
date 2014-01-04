@@ -32,19 +32,26 @@ use IEEE.STD_LOGIC_1164.ALL;
 use cpu_types.ALL;
 
 entity Execute is
-		Port( clock : in  STD_LOGIC;
+	Port( clock : in  STD_LOGIC;
 			instruction : in STD_LOGIC_VECTOR(31 downto 0); 
 			command : in STD_LOGIC_VECTOR(31 downto 0); 
 			endprogram : out STD_LOGIC;
 			nextpc : out STD_LOGIC;
 			memregion_register : inout t_MemRegister_15_32
-	 );
+		 );
 end Execute;
 
 architecture Behavioral of Execute is
 
+	component ALU is
+		 Port( clock : in STD_LOGIC;
+				 alu_op : in STD_LOGIC_VECTOR(15 downto 0);
+				 op1 : in STD_LOGIC_VECTOR(31 downto 0);
+				 op2 : in STD_LOGIC_VECTOR(31 downto 0);
+				 result : out STD_LOGIC_VECTOR(31 downto 0));
+	end component ALU;
+	
 begin
-
-
+	
 end Behavioral;
 
