@@ -31,33 +31,10 @@ use IEEE.NUMERIC_STD.ALL;
 use cpu_types.ALL;
 
 entity Decode is
-    Port( 
-		clock : in STD_LOGIC;
-		instruction : in STD_LOGIC_VECTOR(31 downto 0); 
-		exec_add  : out STD_LOGIC;
-		exec_sub  : out STD_LOGIC;
-		exec_mul  : out STD_LOGIC;
-		exec_div  : out STD_LOGIC;
-		exec_and  : out STD_LOGIC;
-		exec_nand : out STD_LOGIC;
-		exec_or   : out STD_LOGIC;
-		exec_nor  : out STD_LOGIC;
-		exec_xor  : out STD_LOGIC;
-		exec_xnor : out STD_LOGIC;
-		exec_not  : out STD_LOGIC;
-		exec_shl  : out STD_LOGIC;
-		exec_shr  : out STD_LOGIC;
-		
-		exec_mov  : out STD_LOGIC;
-		exec_ldr  : out STD_LOGIC;
-		exec_str  : out STD_LOGIC;
-		exec_push : out STD_LOGIC;
-		exec_pop  : out STD_LOGIC;
-		
-		exec_jmp  : out STD_LOGIC;
-		
-		exec_int  : out STD_LOGIC
-			);
+	Port( clock : in STD_LOGIC;
+			instruction : in STD_LOGIC_VECTOR(31 downto 0); 
+			command : out STD_LOGIC_VECTOR(31 downto 0)
+		 );
 end Decode;
 
 architecture Behavioral of Decode is
@@ -118,67 +95,86 @@ begin
 			case_opcode : case opcode is
 			
 				when op_add =>
-					exec_add <= '1';
+					command(31 downto 16) <= cmd_type_alu;
+					command(15 downto 0) <= alu_add;
 					
 				when op_sub =>
-					exec_sub <= '1';
+					command(31 downto 16) <= cmd_type_alu;
+					command(15 downto 0) <= alu_sub;
 					
 				when op_mul =>
-					exec_mul <= '1';
+					command(31 downto 16) <= cmd_type_alu;
+					command(15 downto 0) <= alu_add;
 					
 				when op_div =>
-					exec_div <= '1';
+					command(31 downto 16) <= cmd_type_alu;
+					command(15 downto 0) <= alu_mul;
 					
 				when op_and =>
-					exec_and <= '1';
+					command(31 downto 16) <= cmd_type_alu;
+					command(15 downto 0) <= alu_div;
 					
 				when op_nand =>
-					exec_nand <= '1';
+					command(31 downto 16) <= cmd_type_alu;
+					command(15 downto 0) <= alu_nand;
 					
 				when op_or =>
-					exec_or <= '1';
+					command(31 downto 16) <= cmd_type_alu;
+					command(15 downto 0) <= alu_or;
 					
 				when op_nor =>
-					exec_nor <= '1';
+					command(31 downto 16) <= cmd_type_alu;
+					command(15 downto 0) <= alu_nor;
 					
 				when op_xor =>
-					exec_xor <= '1';
+					command(31 downto 16) <= cmd_type_alu;
+					command(15 downto 0) <= alu_xor;
 					
 				when op_xnor =>
-					exec_xnor <= '1';
+					command(31 downto 16) <= cmd_type_alu;
+					command(15 downto 0) <= alu_xnor;
 					
 				when op_not =>
-					exec_not <= '1';
+					command(31 downto 16) <= cmd_type_alu;
+					command(15 downto 0) <= alu_not;
 					
 				when op_shl =>
-					exec_shl <= '1';
+					command(31 downto 16) <= cmd_type_alu;
+					command(15 downto 0) <= alu_shl;
 					
 				when op_shr =>
-					exec_shr <= '1';
+					command(31 downto 16) <= cmd_type_alu;
+					command(15 downto 0) <= alu_shr;
 				
 				when op_mov =>
-					exec_mov <= '1';
+					command(31 downto 16) <= cmd_type_mem;
+					command(15 downto 0) <= mem_mov;
 					
 				when op_ldr =>
-					exec_ldr <= '1';
+					command(31 downto 16) <= cmd_type_mem;
+					command(15 downto 0) <= mem_ldr;
 					
 				when op_str =>
-					exec_str <= '1';
+					command(31 downto 16) <= cmd_type_mem;
+					command(15 downto 0) <= mem_str;
 					
 				when op_push =>
-					exec_push <= '1';
+					command(31 downto 16) <= cmd_type_mem;
+					command(15 downto 0) <= mem_push;
 					
 				when op_pop =>
-					exec_pop <= '1';
+					command(31 downto 16) <= cmd_type_mem;
+					command(15 downto 0) <= mem_pop;
 				
-				when op_jmp  =>
-					exec_jmp <= '1';
+				when op_jmp =>
+					command(31 downto 16) <= cmd_type_br;
+					command(15 downto 0) <= br_jmp;
 				
-				when op_int  =>
-					exec_int <= '1';
+				when op_int =>
+					command(31 downto 16) <= cmd_type_sys;
+					command(15 downto 0) <= sys_int;
 				
 				when others =>
-					exec_int <= '1';
 					
 			end case case_opcode;
 			

@@ -68,61 +68,14 @@ architecture Behavioral of ControlUnit is
 	component Decode is  
 		Port( clock : in STD_LOGIC;
 				instruction : in STD_LOGIC_VECTOR(31 downto 0); 
-				
-				exec_add  : out STD_LOGIC;
-				exec_sub  : out STD_LOGIC;
-				exec_mul  : out STD_LOGIC;
-				exec_div  : out STD_LOGIC;
-				exec_and  : out STD_LOGIC;
-				exec_nand : out STD_LOGIC;
-				exec_or   : out STD_LOGIC;
-				exec_nor  : out STD_LOGIC;
-				exec_xor  : out STD_LOGIC;
-				exec_xnor : out STD_LOGIC;
-				exec_not  : out STD_LOGIC;
-				exec_shl  : out STD_LOGIC;
-				exec_shr  : out STD_LOGIC;
-				
-				exec_mov  : out STD_LOGIC;
-				exec_ldr  : out STD_LOGIC;
-				exec_str  : out STD_LOGIC;
-				exec_push : out STD_LOGIC;
-				exec_pop  : out STD_LOGIC;
-				
-				exec_jmp  : out STD_LOGIC;
-				
-				exec_int  : out STD_LOGIC
+				command : out STD_LOGIC_VECTOR(31 downto 0)
 			 );
 	end component Decode;
 	
 	component Execute is  
 		Port( clock : in  STD_LOGIC;
 				instruction : in STD_LOGIC_VECTOR(31 downto 0); 
-				
-				exec_add  : in STD_LOGIC;
-				exec_sub  : in STD_LOGIC;
-				exec_mul  : in STD_LOGIC;
-				exec_div  : in STD_LOGIC;
-				exec_and  : in STD_LOGIC;
-				exec_nand : in STD_LOGIC;
-				exec_or   : in STD_LOGIC;
-				exec_nor  : in STD_LOGIC;
-				exec_xor  : in STD_LOGIC;
-				exec_xnor : in STD_LOGIC;
-				exec_not  : in STD_LOGIC;
-				exec_shl  : in STD_LOGIC;
-				exec_shr  : in STD_LOGIC;
-				
-				exec_mov  : in STD_LOGIC;
-				exec_ldr  : in STD_LOGIC;
-				exec_str  : in STD_LOGIC;
-				exec_push : in STD_LOGIC;
-				exec_pop  : in STD_LOGIC;
-				
-				exec_jmp : in STD_LOGIC;
-				
-				exec_int : in STD_LOGIC;
-				
+				command : in STD_LOGIC_VECTOR(31 downto 0); 
 				endprogram : out STD_LOGIC;
 				nextpc : out STD_LOGIC;
 				memregion_register : inout t_MemRegister_15_32
@@ -214,59 +167,14 @@ begin
 	(
 		clock,
 		R2,
-		execute_add,
-		execute_sub,
-		execute_mul, 
-		execute_div, 
-		execute_and, 
-		execute_nand,
-		execute_or,  
-		execute_nor, 
-		execute_xor,
-		execute_xnor,
-		execute_not, 
-		execute_shl, 
-      execute_shr, 
-      
-      execute_mov, 
-      execute_ldr, 
-      execute_str, 
-      execute_push,
-      execute_pop, 
-      
-      execute_jmp, 
-      
-      execute_int
+		R5
 	);
 	
 	ExecuteCommand: Execute port map
 	(
 		clock,
 		R2,
-		
-		execute_add,
-		execute_sub,
-		execute_mul, 
-		execute_div, 
-		execute_and, 
-		execute_nand,
-		execute_or,  
-		execute_nor, 
-		execute_xor,
-		execute_xnor,
-		execute_not, 
-		execute_shl, 
-      execute_shr, 
-      
-      execute_mov, 
-      execute_ldr, 
-      execute_str, 
-      execute_push,
-      execute_pop, 
-      
-      execute_jmp, 
-      
-      execute_int,
+		R5,
 		
 		endexecution, 
 		exec_getpc,
