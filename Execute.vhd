@@ -48,7 +48,7 @@ entity Execute is
 end Execute;
 
 architecture Behavioral of Execute is
-
+				
 	-- ALU execution signals
 	signal add : STD_LOGIC;
 	signal sub : STD_LOGIC;
@@ -68,21 +68,21 @@ architecture Behavioral of Execute is
 			 );
 	end component ALU_Select;
 	
-	component adder32 is
+	component alu_adder32 is
 		Port( 
 				clock : in STD_LOGIC;
+				exec_add : in STD_LOGIC;
 				vA : in STD_LOGIC_VECTOR (31 downto 0);
 				vB : in STD_LOGIC_VECTOR (31 downto 0);
 				vS : out STD_LOGIC_VECTOR (31 downto 0)
 			 );
-			  
-end component adder32;
+	end alu_adder32;
 	
 begin
 
 	-- ALU component mapping
 	ALU : ALU_Select port map(clock, exec_alu, cmd_id, add, sub, mul, div);
-	--ALU_Add32 : adder32 port map(clock, )
+	--ALU_Add32 : alu_adder32 port map(clock, add, )
 	
 	-- Logical component mapping
 	-- Branch component mapping
