@@ -53,14 +53,14 @@ package cpu_types is
 	constant R15_addr : integer := 14;  -- GPR
 	
 	
-	-- command types
-	subtype cmd_type_size is STD_LOGIC_VECTOR(15 downto 0);
-	constant cmd_type_alu : cmd_type_size := X"0000";
-	constant cmd_type_br  : cmd_type_size := X"0001";
-	constant cmd_type_mem : cmd_type_size := X"0002";
-	constant cmd_type_sys : cmd_type_size := X"0003";
-	
-	
+--	-- command types
+--	subtype cmd_type_size is STD_LOGIC_VECTOR(15 downto 0);
+--	constant cmd_type_alu : cmd_type_size := X"0000";
+--	constant cmd_type_br  : cmd_type_size := X"0001";
+--	constant cmd_type_mem : cmd_type_size := X"0002";
+--	constant cmd_type_sys : cmd_type_size := X"0003";
+--	
+--	
 	-- command id
 	subtype cmd_id_size is STD_LOGIC_VECTOR(15 downto 0);
 	constant alu_add  : cmd_id_size := X"0000";

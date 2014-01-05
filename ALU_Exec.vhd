@@ -40,14 +40,14 @@ end ALU_Exec;
 
 architecture Behavioral of ALU_Exec is
 
-component adder32 is
-    Port( clock : in STD_LOGIC;
-			 vA : in STD_LOGIC_VECTOR (31 downto 0);
-			 vB : in STD_LOGIC_VECTOR (31 downto 0);
-          vS : out STD_LOGIC_VECTOR (31 downto 0)
-			);
-			  
-end component adder32;
+--component adder32 is
+--    Port( clock : in STD_LOGIC;
+--			 vA : in STD_LOGIC_VECTOR (31 downto 0);
+--			 vB : in STD_LOGIC_VECTOR (31 downto 0);
+--          vS : out STD_LOGIC_VECTOR (31 downto 0)
+--			);
+--			  
+--end component adder32;
 
 begin
 

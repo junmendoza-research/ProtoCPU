@@ -49,15 +49,45 @@ end Execute;
 
 architecture Behavioral of Execute is
 
-	component ALU is
-		 Port( clock : in STD_LOGIC;
-				 alu_op : in STD_LOGIC_VECTOR(15 downto 0);
-				 op1 : in STD_LOGIC_VECTOR(31 downto 0);
-				 op2 : in STD_LOGIC_VECTOR(31 downto 0);
-				 result : out STD_LOGIC_VECTOR(31 downto 0));
-	end component ALU;
+	-- ALU execution signals
+	signal add : STD_LOGIC;
+	signal sub : STD_LOGIC;
+	signal mul : STD_LOGIC;
+	signal div : STD_LOGIC;
+	
+	-- ALU components
+	component ALU_Select is
+		Port( 
+				clock : in STD_LOGIC;
+				exec : in STD_LOGIC; 
+				alu_exec_sel : in STD_LOGIC_VECTOR(15 downto 0);
+				alu_exec_add : out STD_LOGIC;
+				alu_exec_sub : out STD_LOGIC;
+				alu_exec_mul : out STD_LOGIC;
+				alu_exec_div : out STD_LOGIC
+			 );
+	end component ALU_Select;
+	
+	component adder32 is
+		Port( 
+				clock : in STD_LOGIC;
+				vA : in STD_LOGIC_VECTOR (31 downto 0);
+				vB : in STD_LOGIC_VECTOR (31 downto 0);
+				vS : out STD_LOGIC_VECTOR (31 downto 0)
+			 );
+			  
+end component adder32;
 	
 begin
+
+	-- ALU component mapping
+	ALU : ALU_Select port map(clock, exec_alu, cmd_id, add, sub, mul, div);
+	--ALU_Add32 : adder32 port map(clock, )
+	
+	-- Logical component mapping
+	-- Branch component mapping
+	-- Memory component mapping
+	-- System component mapping
 	
 end Behavioral;
 
