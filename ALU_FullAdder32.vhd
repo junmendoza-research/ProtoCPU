@@ -41,11 +41,11 @@ end adder32;
 architecture Behavioral of adder32 is
 
 	component fulladder 
-		 Port ( a : in  STD_LOGIC;
-				  b : in  STD_LOGIC;
-				  c : in  STD_LOGIC;
-				  s_out : out  STD_LOGIC;
-				  c_out : out  STD_LOGIC);
+		 Port( a : in  STD_LOGIC;
+				 b : in  STD_LOGIC;
+				 c : in  STD_LOGIC;
+				 s_out : out  STD_LOGIC;
+				 c_out : out  STD_LOGIC);
 	end component;
 
 	signal carry : STD_LOGIC_VECTOR (31 downto 0);

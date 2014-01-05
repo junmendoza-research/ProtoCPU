@@ -32,11 +32,17 @@ use IEEE.STD_LOGIC_1164.ALL;
 use cpu_types.ALL;
 
 entity Execute is
-	Port( clock : in  STD_LOGIC;
+	Port( 
+			clock : in STD_LOGIC;
 			instruction : in STD_LOGIC_VECTOR(31 downto 0); 
-			command : in STD_LOGIC_VECTOR(31 downto 0); 
-			endprogram : out STD_LOGIC;
+			exec_alu : in STD_LOGIC; 
+			exec_logical : in STD_LOGIC; 
+			exec_branch : in STD_LOGIC; 
+			exec_mem : in STD_LOGIC; 
+			exec_system : in STD_LOGIC; 
+			cmd_id : in STD_LOGIC_VECTOR(15 downto 0); 
 			nextpc : out STD_LOGIC;
+			endprogram : out STD_LOGIC;
 			memregion_register : inout t_MemRegister_15_32
 		 );
 end Execute;

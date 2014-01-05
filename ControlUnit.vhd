@@ -66,18 +66,30 @@ architecture Behavioral of ControlUnit is
 	end component Fetch;
 	
 	component Decode is  
-		Port( clock : in STD_LOGIC;
+		Port( 
+				clock : in STD_LOGIC;
 				instruction : in STD_LOGIC_VECTOR(31 downto 0); 
-				command : out STD_LOGIC_VECTOR(31 downto 0)
+				exec_alu : out STD_LOGIC; 
+				exec_logical : out STD_LOGIC; 
+				exec_branch : out STD_LOGIC; 
+				exec_mem : out STD_LOGIC; 
+				exec_system : out STD_LOGIC; 
+				command : out STD_LOGIC_VECTOR(15 downto 0)
 			 );
 	end component Decode;
 	
 	component Execute is  
-		Port( clock : in  STD_LOGIC;
+		Port( 
+				clock : in STD_LOGIC;
 				instruction : in STD_LOGIC_VECTOR(31 downto 0); 
-				command : in STD_LOGIC_VECTOR(31 downto 0); 
-				endprogram : out STD_LOGIC;
+				exec_alu : in STD_LOGIC; 
+				exec_logical : in STD_LOGIC; 
+				exec_branch : in STD_LOGIC; 
+				exec_mem : in STD_LOGIC; 
+				exec_system : in STD_LOGIC; 
+				cmd_id : in STD_LOGIC_VECTOR(15 downto 0); 
 				nextpc : out STD_LOGIC;
+				endprogram : out STD_LOGIC;
 				memregion_register : inout t_MemRegister_15_32
 		    );
 	end component Execute;
@@ -115,29 +127,13 @@ architecture Behavioral of ControlUnit is
 	signal R15 : STD_LOGIC_VECTOR(31 downto 0);
 	
 	-- Command signals
-	signal execute_add  : STD_LOGIC;
-	signal execute_sub  : STD_LOGIC;
-	signal execute_mul  : STD_LOGIC;
-	signal execute_div  : STD_LOGIC;
-	signal execute_and  : STD_LOGIC;
-	signal execute_nand : STD_LOGIC;
-	signal execute_or   : STD_LOGIC;
-	signal execute_nor  : STD_LOGIC;
-	signal execute_xor  : STD_LOGIC;
-	signal execute_xnor : STD_LOGIC;
-	signal execute_not  : STD_LOGIC;
-	signal execute_shl  : STD_LOGIC;
-	signal execute_shr  : STD_LOGIC;
-		
-	signal execute_mov  : STD_LOGIC;
-	signal execute_ldr  : STD_LOGIC;
-	signal execute_str  : STD_LOGIC;
-	signal execute_push : STD_LOGIC;
-	signal execute_pop  : STD_LOGIC;
-		
-	signal execute_jmp  : STD_LOGIC;
-		
-	signal execute_int  : STD_LOGIC;
+	signal execute_alu  		: STD_LOGIC;
+	signal execute_logical  : STD_LOGIC;
+	signal execute_branch  	: STD_LOGIC;
+	signal execute_mem  		: STD_LOGIC;
+	signal execute_system  	: STD_LOGIC;
+	signal cmd_id 				: STD_LOGIC_VECTOR(15 downto 0);
+
 	
 	------------------------------------
 	-- Initialize program region (Instruction Stream)
@@ -167,15 +163,24 @@ begin
 	(
 		clock,
 		R2,
-		R5
+		execute_alu,
+		execute_logical,
+		execute_branch,
+		execute_mem,
+		execute_system,
+		cmd_id
 	);
 	
 	ExecuteCommand: Execute port map
 	(
 		clock,
 		R2,
-		R5,
-		
+		execute_alu,
+		execute_logical,
+		execute_branch,
+		execute_mem,
+		execute_system,
+		cmd_id,
 		endexecution, 
 		exec_getpc,
 		

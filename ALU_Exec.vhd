@@ -30,15 +30,15 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 use cpu_types.ALL;
 
-entity ALU is
+entity ALU_Exec is
     Port ( clock : in STD_LOGIC;
            alu_sel : in STD_LOGIC_VECTOR(15 downto 0);
            op1 : in STD_LOGIC_VECTOR(31 downto 0);
            op2 : in STD_LOGIC_VECTOR(31 downto 0);
            result : out STD_LOGIC_VECTOR(31 downto 0));
-end ALU;
+end ALU_Exec;
 
-architecture Behavioral of ALU is
+architecture Behavioral of ALU_Exec is
 
 component adder32 is
     Port( clock : in STD_LOGIC;
@@ -51,20 +51,7 @@ end component adder32;
 
 begin
 
---	select_op : if alu_op = alu_add generate
---		exec_add : adder32 port map(clock, op1, op2, result);
---	end generate select_op; 
-	
-	ProcALU : process(alu_sel) 
-	begin 
-		SelectOp : if alu_sel = alu_add then    
---			result <= op1 + op2;
-		elsif  alu_sel = alu_sub then
-		
-		else
-		
-		end if SelectOp;
-	end process ProcALU;
+
 	
 end Behavioral;
 
